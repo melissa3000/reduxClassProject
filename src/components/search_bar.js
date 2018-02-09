@@ -14,9 +14,17 @@ class SearchBar extends Component {
     this.state = { term: ''};
   }
 
-  // Capture user's input in input tag (search bar) and console the value
+  // Capture user's input and pass an object that contains the new state we want
+  // to give our component.
+  // Always update state by using method this.setState
   render() {
-    return <input onChange={event => console.log(event.target.value)} />;
+    return (
+      <div>
+        <input onChange={event => this.setState({ term: event.target.value })} />
+        // Render the term property of the state object in the DOM when it's changed
+        Value of the input: {this.state.term}
+      </div>
+    );
   }
 }
 
