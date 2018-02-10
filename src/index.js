@@ -3,8 +3,8 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search';
-
 import SearchBar from './components/search_bar';
+import VideoList from './components/video_list';
 
 const API_KEY = 'AIzaSyC2P9ybRENihTGZcpPqX0gBi7gN5MUwJoY';
 
@@ -19,10 +19,10 @@ class App extends Component {
 
     this.state = { videos: [] };
 
-    // Include search in constructor so that the first search isn't empty and state
-    // will be set right off
     YTSearch({ key: API_KEY, term: 'kittens'}, (videos) => {
-      this.setState({ videos: videos });
+      // if key and value are the same term, they can be condensed
+      // this.setState({ videos: videos });
+      this.setState({ videos });
     });
   }
 
@@ -30,6 +30,7 @@ class App extends Component {
     return (
       <div>
         <SearchBar />
+        <VideoList />
       </div>
     );
   }
