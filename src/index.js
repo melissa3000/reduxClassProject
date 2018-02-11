@@ -14,17 +14,12 @@ class App extends Component {
   constructor(props){
     super(props);
 
-    // Add selected video as an object that will be passed into video detail
-    // Pass callback from VideoList and then from there to Video_list_item, when
-    // video list item is clicked it'll run the callback it'll run the video
 
     this.state = {
       videos: [],
       selectedVideo: null
     };
 
-    // Must break back out into long form syntax to also set an initial video, so
-    // it doesn't hang on initial loading... screen
     YTSearch({ key: API_KEY, term: 'kittens'}, (videos) => {
       this.setState({
         videos: videos,
@@ -33,14 +28,15 @@ class App extends Component {
     });
   }
 
-  // pass data (prop) from App into the video list
-  // pass the first video in the state list for testing
   render() {
     return (
       <div>
         <SearchBar />
         <VideoDetail video={this.state.selectedVideo}/>
-        <VideoList videos={this.state.videos}/>
+        <VideoList
+          // Passes property onVideoSelect to video_list through props
+          onVideoSelect={selectedVideo => this.setState({selectedVideo})}
+          videos={this.state.videos} />
       </div>
     );
   }
