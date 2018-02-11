@@ -1,0 +1,31 @@
+.search-bar {
+    margin: 20px;
+    text-align: center;
+}
+
+ /*select input child of search bar*/
+.search-bar input {
+    width: 75%;
+}
+
+/*video thumbnails on right hand side of page*/
+.video-item img {
+    max-width: 64px;
+}
+
+/*individual video details on right hand panel*/
+.video-detail .details {
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+
+/*when hovering over list item, background color changes to darker gray*/
+.list-group-item:hover {
+    background-color: #eee;
+}
