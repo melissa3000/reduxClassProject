@@ -20,7 +20,15 @@ class App extends Component {
       selectedVideo: null
     };
 
-    YTSearch({ key: API_KEY, term: 'kittens'}, (videos) => {
+    // Keep initial hard coded search so page isn't blank when it initially loads
+    this.videoSearch('kittens');
+  }
+
+  // Add search bar callback that allows user to search for new videos - it will
+  // take a string (search term) and make a new YTSearch and set the state of the
+  // new list of videos
+  videoSearch(term) {
+    YTSearch({ key: API_KEY, term: term}, (videos) => {
       this.setState({
         videos: videos,
         selectedVideo: videos[0]
@@ -31,7 +39,7 @@ class App extends Component {
   render() {
     return (
       <div>
-        <SearchBar />
+        <SearchBar onSearchTermChange={term => this.videoSearch(term)} />
         <VideoDetail video={this.state.selectedVideo}/>
         <VideoList
           // Passes property onVideoSelect to video_list through props
