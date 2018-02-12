@@ -1,5 +1,6 @@
 //Top level component is the one that should fetch data
 
+import _ from 'lodash';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import YTSearch from 'youtube-api-search';
@@ -20,13 +21,10 @@ class App extends Component {
       selectedVideo: null
     };
 
-    // Keep initial hard coded search so page isn't blank when it initially loads
     this.videoSearch('kittens');
   }
 
-  // Add search bar callback that allows user to search for new videos - it will
-  // take a string (search term) and make a new YTSearch and set the state of the
-  // new list of videos
+
   videoSearch(term) {
     YTSearch({ key: API_KEY, term: term}, (videos) => {
       this.setState({
@@ -37,9 +35,20 @@ class App extends Component {
   }
 
   render() {
+
+    // Add throttle using lodash so that search results aren't udpated with every
+    // key stroke. Instead only want to call onSearchTermChange only every so many
+    // milliseconds. Create new const and pass it to onSearchTermChange.
+
+    // Create new fat arrow function and pass it to debounce. Debounce takes inner function
+    // and returns new function that can only be called once every 300 ms. Can
+    // be called more often, but will only run every 300ms.
+    const videoSearch = _.debounce((term) => { this.videoSearch(term) }, 300);
+
+
     return (
       <div>
-        <SearchBar onSearchTermChange={term => this.videoSearch(term)} />
+        <SearchBar onSearchTermChange={videoSearch} />
         <VideoDetail video={this.state.selectedVideo}/>
         <VideoList
           // Passes property onVideoSelect to video_list through props
